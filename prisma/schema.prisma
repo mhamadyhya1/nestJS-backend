@@ -19,10 +19,7 @@ model Task{
 }
 model User{
   id Int @id @default(autoincrement())
-  firstName String
-  lastName String
   email String @unique
-  token String
   password String
-  rolePermission String
+  isAdmin Int
 }
