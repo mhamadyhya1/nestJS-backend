@@ -30,10 +30,13 @@ export class UsersService {
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+    return this.prisma.task.update({
+      where:{id},
+      data:updateUserDto,
+    })
   }
 
   remove(id: number) {
-    return `This action removes a #${id} user`;
+    return this.prisma.task.delete({where:{id}});
   }
 }

@@ -8,6 +8,6 @@ export declare class UsersService {
     create(createUserDto: CreateUserDto): Promise<UserAuth>;
     findAll(): string;
     findOne(id: number): string;
-    update(id: number, updateUserDto: UpdateUserDto): string;
-    remove(id: number): string;
+    update(id: number, updateUserDto: UpdateUserDto): import(".prisma/client").Prisma.Prisma__TaskClient<import(".prisma/client").Task, never>;
+    remove(id: number): import(".prisma/client").Prisma.Prisma__TaskClient<import(".prisma/client").Task, never>;
 }

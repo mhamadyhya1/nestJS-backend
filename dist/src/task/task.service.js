@@ -19,8 +19,18 @@ let TaskService = class TaskService {
     create(createTaskDto) {
         return this.prisma.task.create({ data: createTaskDto });
     }
-    findAll() {
+    findAllTask() {
         return this.prisma.task.findMany();
+    }
+    async findAll(pages, limit) {
+        const take = limit;
+        console.log(take);
+        const page = pages || 1;
+        const skip = (page - 1) * take;
+        const total = this.prisma.task.count();
+        const data = this.prisma.task.findMany({ take: take, skip: skip });
+        const dataresponse = { count: total, data: data };
+        return dataresponse;
     }
     findOne(id) {
         return this.prisma.task.findUnique({ where: { id } });
@@ -31,8 +41,23 @@ let TaskService = class TaskService {
             data: updateTaskDto,
         });
     }
+    assignTaskByUser(id, updateTaskDto) {
+        return this.prisma.task.update({
+            where: { id },
+            data: { assignee: updateTaskDto.assignee },
+        });
+    }
     remove(id) {
         return this.prisma.task.delete({ where: { id } });
+    }
+    filteringTask(updateTaskDto) {
+        const data = this.prisma.task.findMany({
+            where: { OR: [
+                    { assignee: updateTaskDto.assignee },
+                    { status: updateTaskDto.status }
+                ] }
+        });
+        return data;
     }
 };
 TaskService = __decorate([

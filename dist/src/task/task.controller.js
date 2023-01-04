@@ -19,6 +19,7 @@ const create_task_dto_1 = require("./dto/create-task.dto");
 const update_task_dto_1 = require("./dto/update-task.dto");
 const swagger_1 = require("@nestjs/swagger");
 const task_entity_1 = require("./entities/task.entity");
+const pipes_1 = require("@nestjs/common/pipes");
 let TaskController = class TaskController {
     constructor(taskService) {
         this.taskService = taskService;
@@ -26,8 +27,11 @@ let TaskController = class TaskController {
     create(createTaskDto) {
         return this.taskService.create(createTaskDto);
     }
-    findAll() {
-        return this.taskService.findAll();
+    filteration(createTaskDto) {
+        return this.taskService.filteringTask(createTaskDto);
+    }
+    findAll(page, limit) {
+        return this.taskService.findAll(page, limit);
     }
     findOne(id) {
         return this.taskService.findOne(+id);
@@ -38,6 +42,9 @@ let TaskController = class TaskController {
     remove(id) {
         return this.taskService.remove(+id);
     }
+    findAllTask() {
+        return this.taskService.findAllTask();
+    }
 };
 __decorate([
     (0, common_1.Post)(),
@@ -47,10 +54,20 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TaskController.prototype, "create", null);
 __decorate([
-    (0, common_1.Get)('all'),
-    (0, swagger_1.ApiOkResponse)({ type: task_entity_1.TaskEntity, isArray: true }),
+    (0, common_1.Post)('filter'),
+    (0, swagger_1.ApiOkResponse)({ type: task_entity_1.TaskEntity }),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [update_task_dto_1.UpdateTaskDto]),
+    __metadata("design:returntype", void 0)
+], TaskController.prototype, "filteration", null);
+__decorate([
+    (0, common_1.Get)('all'),
+    (0, swagger_1.ApiOkResponse)({ type: task_entity_1.TaskEntity, isArray: false }),
+    __param(0, (0, common_1.Query)('page', pipes_1.ParseIntPipe)),
+    __param(1, (0, common_1.Query)('limit', pipes_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number]),
     __metadata("design:returntype", void 0)
 ], TaskController.prototype, "findAll", null);
 __decorate([
@@ -76,6 +93,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], TaskController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Get)('Tasksss'),
+    (0, swagger_1.ApiOkResponse)({ type: task_entity_1.TaskEntity, isArray: true }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], TaskController.prototype, "findAllTask", null);
 TaskController = __decorate([
     (0, common_1.Controller)('task'),
     (0, swagger_1.ApiTags)('task'),
