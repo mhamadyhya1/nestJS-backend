@@ -7,8 +7,8 @@ export declare class TaskService {
     create(createTaskDto: CreateTaskDto): import(".prisma/client").Prisma.Prisma__TaskClient<import(".prisma/client").Task, never>;
     findAllTask(): import(".prisma/client").PrismaPromise<import(".prisma/client").Task[]>;
     findAll(pages: number, limit: number): Promise<{
-        count: import(".prisma/client").PrismaPromise<number>;
-        data: import(".prisma/client").PrismaPromise<import(".prisma/client").Task[]>;
+        count: number;
+        data: import(".prisma/client").Task[];
     }>;
     findOne(id: number): import(".prisma/client").Prisma.Prisma__TaskClient<import(".prisma/client").Task, never>;
     update(id: number, updateTaskDto: UpdateTaskDto): import(".prisma/client").Prisma.Prisma__TaskClient<import(".prisma/client").Task, never>;

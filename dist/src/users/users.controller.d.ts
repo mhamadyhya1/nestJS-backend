@@ -6,7 +6,7 @@ export declare class UsersController {
     constructor(usersService: UsersService);
     create(createUserDto: CreateUserDto): Promise<Partial<Pick<import("./entities/user.entity").UserEntity, "email" | "password" | "isAdmin">>>;
     findAll(): string;
-    findOne(id: string): string;
-    update(id: string, updateUserDto: UpdateUserDto): import(".prisma/client").Prisma.Prisma__TaskClient<import(".prisma/client").Task, never>;
-    remove(id: string): import(".prisma/client").Prisma.Prisma__TaskClient<import(".prisma/client").Task, never>;
+    findOne(id: string): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
+    update(id: string, updateUserDto: UpdateUserDto): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
+    remove(id: string): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
 }

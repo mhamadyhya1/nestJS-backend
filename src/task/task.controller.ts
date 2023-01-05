@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { TaskEntity } from './entities/task.entity';
 import { ParseIntPipe } from '@nestjs/common/pipes';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('task')
 @ApiTags('task')
@@ -21,6 +22,7 @@ export class TaskController {
     return this.taskService.filteringTask(createTaskDto)
   }
   @Get('all')
+  @UseGuards(AuthGuard('jwt'))
   @ApiOkResponse({ type: TaskEntity, isArray: false })
   findAll(@Query('page',ParseIntPipe) page:number ,@Query('limit',ParseIntPipe) limit:number ) {
     return this.taskService.findAll(page,limit);

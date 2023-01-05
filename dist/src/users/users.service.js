@@ -34,16 +34,16 @@ let UsersService = class UsersService {
         return `This action returns all users`;
     }
     findOne(id) {
-        return `This action returns a #${id} user`;
+        return this.prisma.user.findUnique({ where: { id } });
     }
     update(id, updateUserDto) {
-        return this.prisma.task.update({
+        return this.prisma.user.update({
             where: { id },
             data: updateUserDto,
         });
     }
     remove(id) {
-        return this.prisma.task.delete({ where: { id } });
+        return this.prisma.user.delete({ where: { id } });
     }
 };
 UsersService = __decorate([

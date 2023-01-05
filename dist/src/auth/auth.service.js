@@ -32,7 +32,6 @@ let AuthService = class AuthService {
         return created;
     }
     async login(createAuthDto) {
-        const payload = { id: createAuthDto.email };
         const checkUser = await this.prisma.user.findUnique({ where: { email: createAuthDto.email } });
         if (!checkUser) {
             throw new exceptions_1.ForbiddenException('Email does not exists, Create New Account');
@@ -41,8 +40,9 @@ let AuthService = class AuthService {
         if (isMatch == false) {
             throw new exceptions_1.ForbiddenException('Password incorrect');
         }
+        const payload = { id: checkUser.id };
         return {
-            access_token: this.jwtService.sign(payload),
+            access_token: this.jwtService.sign(payload, { secret: process.env.SECRET_KEY, expiresIn: process.env.EXPIRES_IN_JWT }),
             data: checkUser
         };
     }

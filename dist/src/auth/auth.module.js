@@ -12,8 +12,8 @@ const auth_service_1 = require("./auth.service");
 const auth_controller_1 = require("./auth.controller");
 const jwt_1 = require("@nestjs/jwt");
 const passport_1 = require("@nestjs/passport");
-const jwt_strategy_1 = require("./strategy/jwt-strategy");
 const prisma_service_1 = require("../prisma/prisma.service");
+const jwt_strategy_1 = require("../strategy/jwt-strategy");
 const secret = process.env.SECRET_KEY_JWT || 'n2r5u8x/A?D(G+KbPeShVmYq3s6v9y$B';
 const expiresIn = process.env.EXPIRES_IN_JWT || '1h';
 let AuthModule = class AuthModule {
@@ -21,7 +21,7 @@ let AuthModule = class AuthModule {
 AuthModule = __decorate([
     (0, common_1.Module)({
         controllers: [auth_controller_1.AuthController],
-        providers: [auth_service_1.AuthService, jwt_strategy_1.JwtStrategy, prisma_service_1.PrismaService],
+        providers: [auth_service_1.AuthService, prisma_service_1.PrismaService, jwt_strategy_1.JwtStrategy],
         imports: [passport_1.PassportModule,
             jwt_1.JwtModule.registerAsync({
                 useFactory: async () => ({

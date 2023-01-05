@@ -20,6 +20,7 @@ const update_task_dto_1 = require("./dto/update-task.dto");
 const swagger_1 = require("@nestjs/swagger");
 const task_entity_1 = require("./entities/task.entity");
 const pipes_1 = require("@nestjs/common/pipes");
+const passport_1 = require("@nestjs/passport");
 let TaskController = class TaskController {
     constructor(taskService) {
         this.taskService = taskService;
@@ -63,6 +64,7 @@ __decorate([
 ], TaskController.prototype, "filteration", null);
 __decorate([
     (0, common_1.Get)('all'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     (0, swagger_1.ApiOkResponse)({ type: task_entity_1.TaskEntity, isArray: false }),
     __param(0, (0, common_1.Query)('page', pipes_1.ParseIntPipe)),
     __param(1, (0, common_1.Query)('limit', pipes_1.ParseIntPipe)),

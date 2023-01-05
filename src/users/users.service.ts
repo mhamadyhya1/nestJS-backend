@@ -26,17 +26,17 @@ export class UsersService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} user`;
+    return this.prisma.user.findUnique({where:{id}})
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    return this.prisma.task.update({
+    return this.prisma.user.update({
       where:{id},
       data:updateUserDto,
     })
   }
 
   remove(id: number) {
-    return this.prisma.task.delete({where:{id}});
+    return this.prisma.user.delete({where:{id}});
   }
 }

@@ -17,10 +17,10 @@ export class TaskService {
     console.log(take)
     const page=pages || 1;
     const skip= (page-1) * take ;
-    const total = this.prisma.task.count();
-    const data =  this.prisma.task.findMany({take:take,skip:skip});
-    const dataresponse = {count:total,data:data}
-    return dataresponse
+    const total = await this.prisma.task.count();
+    const count = Math.ceil(total/limit)
+    const filtered =  await this.prisma.task.findMany({take:take,skip:skip});
+    return { count,data:filtered}
   }
 
   findOne(id: number) {
