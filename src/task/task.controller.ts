@@ -21,8 +21,8 @@ export class TaskController {
   filteration(@Body() createTaskDto: UpdateTaskDto){
     return this.taskService.filteringTask(createTaskDto)
   }
-  @Get('all')
   @UseGuards(AuthGuard('jwt'))
+  @Get('all')
   @ApiOkResponse({ type: TaskEntity, isArray: false })
   findAll(@Query('page',ParseIntPipe) page:number ,@Query('limit',ParseIntPipe) limit:number ) {
     return this.taskService.findAll(page,limit);

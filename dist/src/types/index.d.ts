@@ -1,3 +1,1 @@
-type Payload = {
-    id: string;
-};
+export declare const data = "";

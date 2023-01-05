@@ -1,10 +1,9 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import * as argon from 'argon2';
-import { JwtService } from '@nestjs/jwt';
-import { ForbiddenException } from '@nestjs/common/exceptions';
 @Injectable()
 export class AuthService {
   constructor(private prisma:PrismaService, private jwtService:JwtService){}
@@ -33,7 +32,7 @@ export class AuthService {
     }
     const payload = { id:checkUser.id };
     return {
-      access_token: this.jwtService.sign(payload,{secret:process.env.SECRET_KEY,expiresIn:process.env.EXPIRES_IN_JWT}),
+      access_token: this.jwtService.sign(payload),
       data: checkUser}
   }
   findAll() {

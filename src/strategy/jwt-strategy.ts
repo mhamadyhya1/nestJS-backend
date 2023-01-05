@@ -1,18 +1,16 @@
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
+import { data } from 'src/types';
 
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor() {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      ignoreExpiration: false,
-      secretOrKey: process.env.SECRET_KEY
+      secretOrKey: process.env.SECRET_KEY,
     });
   }
 
-  async validate(payload:any) {
-    return {
-      userId: payload.id,
-    };
+  async validate(payload: any) {
+    return { id: payload.id};
   }
 }
