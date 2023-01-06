@@ -8,5 +8,5 @@ export class CreateTaskDto {
     @ApiProperty()
     status:string;
     @ApiProperty({required:false})
-    assignee:string
+    userID:number
 }

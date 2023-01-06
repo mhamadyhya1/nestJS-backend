@@ -27,7 +27,7 @@ __decorate([
 ], CreateTaskDto.prototype, "status", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ required: false }),
-    __metadata("design:type", String)
-], CreateTaskDto.prototype, "assignee", void 0);
+    __metadata("design:type", Number)
+], CreateTaskDto.prototype, "userID", void 0);
 exports.CreateTaskDto = CreateTaskDto;
 //# sourceMappingURL=create-task.dto.js.map

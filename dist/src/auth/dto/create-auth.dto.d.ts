@@ -3,3 +3,7 @@ export declare class CreateAuthDto {
     password: string;
     isAdmin: number;
 }
+export declare class loginAuthDto {
+    email: string;
+    password: string;
+}

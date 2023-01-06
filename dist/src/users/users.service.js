@@ -31,19 +31,23 @@ let UsersService = class UsersService {
         return created;
     }
     findAll() {
-        return `This action returns all users`;
+        return this.prisma.user.findMany();
     }
-    findOne(id) {
-        return `This action returns a #${id} user`;
+    async findOne(id) {
+        const user = await this.prisma.user.findUnique({ where: { id: id } });
+        if (!user) {
+            throw new common_1.NotFoundException('Not Available User');
+        }
+        return user;
     }
     update(id, updateUserDto) {
-        return this.prisma.task.update({
+        return this.prisma.user.update({
             where: { id },
             data: updateUserDto,
         });
     }
     remove(id) {
-        return this.prisma.task.delete({ where: { id } });
+        return this.prisma.user.delete({ where: { id } });
     }
 };
 UsersService = __decorate([

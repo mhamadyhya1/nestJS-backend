@@ -31,7 +31,7 @@ __decorate([
 ], TaskEntity.prototype, "status", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ required: false, nullable: true }),
-    __metadata("design:type", String)
-], TaskEntity.prototype, "assignee", void 0);
+    __metadata("design:type", Number)
+], TaskEntity.prototype, "userID", void 0);
 exports.TaskEntity = TaskEntity;
 //# sourceMappingURL=task.entity.js.map

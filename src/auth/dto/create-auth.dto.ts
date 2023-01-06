@@ -3,3 +3,7 @@ export class CreateAuthDto {
     password:string;
     isAdmin:number
 }
+export class loginAuthDto {
+    email:string;
+    password:string;
+}

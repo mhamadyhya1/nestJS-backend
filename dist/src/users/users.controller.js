@@ -17,6 +17,9 @@ const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
 const create_user_dto_1 = require("./dto/create-user.dto");
 const update_user_dto_1 = require("./dto/update-user.dto");
+const passport_1 = require("@nestjs/passport");
+const decorators_1 = require("@nestjs/common/decorators");
+const dist_1 = require("@nestjs/swagger/dist");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -74,6 +77,8 @@ __decorate([
 ], UsersController.prototype, "remove", null);
 UsersController = __decorate([
     (0, common_1.Controller)('users'),
+    (0, decorators_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
+    (0, dist_1.ApiTags)('Users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])
 ], UsersController);
 exports.UsersController = UsersController;

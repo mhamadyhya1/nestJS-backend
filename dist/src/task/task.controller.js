@@ -20,6 +20,7 @@ const update_task_dto_1 = require("./dto/update-task.dto");
 const swagger_1 = require("@nestjs/swagger");
 const task_entity_1 = require("./entities/task.entity");
 const pipes_1 = require("@nestjs/common/pipes");
+const passport_1 = require("@nestjs/passport");
 let TaskController = class TaskController {
     constructor(taskService) {
         this.taskService = taskService;
@@ -30,14 +31,18 @@ let TaskController = class TaskController {
     filteration(createTaskDto) {
         return this.taskService.filteringTask(createTaskDto);
     }
-    findAll(page, limit) {
-        return this.taskService.findAll(page, limit);
+    async findAll(page, limit) {
+        const result = await this.taskService.findAllPaginated(page, limit);
+        return result;
     }
     findOne(id) {
         return this.taskService.findOne(+id);
     }
     update(id, updateTaskDto) {
         return this.taskService.update(+id, updateTaskDto);
+    }
+    removeAll() {
+        return this.taskService.removeAll();
     }
     remove(id) {
         return this.taskService.remove(+id);
@@ -62,15 +67,17 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TaskController.prototype, "filteration", null);
 __decorate([
-    (0, common_1.Get)('all'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
+    (0, common_1.Get)('allPaginated'),
     (0, swagger_1.ApiOkResponse)({ type: task_entity_1.TaskEntity, isArray: false }),
     __param(0, (0, common_1.Query)('page', pipes_1.ParseIntPipe)),
     __param(1, (0, common_1.Query)('limit', pipes_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, Number]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], TaskController.prototype, "findAll", null);
 __decorate([
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     (0, common_1.Get)(':id'),
     (0, swagger_1.ApiOkResponse)({ type: task_entity_1.TaskEntity, isArray: true }),
     __param(0, (0, common_1.Param)('id')),
@@ -87,6 +94,14 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TaskController.prototype, "update", null);
 __decorate([
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
+    (0, common_1.Delete)('/all'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], TaskController.prototype, "removeAll", null);
+__decorate([
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -94,6 +109,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TaskController.prototype, "remove", null);
 __decorate([
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     (0, common_1.Get)('Tasksss'),
     (0, swagger_1.ApiOkResponse)({ type: task_entity_1.TaskEntity, isArray: true }),
     __metadata("design:type", Function),

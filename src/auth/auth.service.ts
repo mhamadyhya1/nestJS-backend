@@ -1,10 +1,10 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import * as argon from 'argon2';
-import { JwtService } from '@nestjs/jwt';
-import { ForbiddenException } from '@nestjs/common/exceptions';
+import { BadRequestException } from '@nestjs/common/exceptions';
 @Injectable()
 export class AuthService {
   constructor(private prisma:PrismaService, private jwtService:JwtService){}
@@ -23,15 +23,15 @@ export class AuthService {
     return created
   }
   async login(createAuthDto: CreateAuthDto){
-    const payload = { id:createAuthDto.email };
     const checkUser = await this.prisma.user.findUnique({where:{email:createAuthDto.email}})
     if(!checkUser){
-      throw new ForbiddenException('Email does not exists, Create New Account')
+      throw new BadRequestException('Email does not exists, Create New Account')
     } 
     const isMatch = await argon.verify(checkUser.password,createAuthDto.password)
     if(isMatch==false){
-      throw new ForbiddenException('Password incorrect')
+      throw new BadRequestException('Password incorrect')
     }
+    const payload = { id:checkUser.id };
     return {
       access_token: this.jwtService.sign(payload),
       data: checkUser}
@@ -49,6 +49,6 @@ export class AuthService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} auth`;
+    return  this.prisma.user.delete({where:{id:id}})
   }
 }
