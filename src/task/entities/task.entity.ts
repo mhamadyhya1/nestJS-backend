@@ -11,6 +11,6 @@ export class TaskEntity implements Task {
     @ApiProperty()
     status: string;
     @ApiProperty({required:false, nullable:true})
-    assignee: string;
+    userID: number;
     
 }

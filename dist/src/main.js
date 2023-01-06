@@ -19,4 +19,7 @@ async function bootstrap() {
     await app.listen(3061);
 }
 bootstrap();
+function UseGlobalGuards(AuthGuard) {
+    throw new Error('Function not implemented.');
+}
 //# sourceMappingURL=main.js.map

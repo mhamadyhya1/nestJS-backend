@@ -4,5 +4,5 @@ export declare class TaskEntity implements Task {
     title: string;
     description: string;
     status: string;
-    assignee: string;
+    userID: number;
 }

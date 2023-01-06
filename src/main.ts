@@ -1,12 +1,13 @@
 import { ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
+import { AuthGuard } from '@nestjs/passport';
 import { DocumentBuilder } from '@nestjs/swagger';
 import { SwaggerModule } from '@nestjs/swagger/dist';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  //app.useGlobalGuards(new JwtAuthGuard());
+  //app.useGlobalGuards(new (AuthGuard('jwt')));
   app.useGlobalPipes(new ValidationPipe({transform: true,forbidUnknownValues: false}));
   const config = new DocumentBuilder()
       .setTitle('Swagger UI')
@@ -19,3 +20,7 @@ async function bootstrap() {
   await app.listen(3061);
 }
 bootstrap();
+function UseGlobalGuards(AuthGuard: (type?: string | string[]) => import("@nestjs/passport").Type<import("@nestjs/passport").IAuthGuard>) {
+  throw new Error('Function not implemented.');
+}
+

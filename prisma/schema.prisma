@@ -10,16 +10,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Task{
-  id Int @id @default(autoincrement())
-  title String
-  description String?
-  status String
-  assignee String?
-}
-model User{
-  id Int @id @default(autoincrement())
-  email String @unique
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
   password String
-  isAdmin Int
+  isAdmin  Int
+  Task     Task[]
+}
+
+model Task {
+  id          Int     @id @default(autoincrement())
+  title       String
+  description String?
+  status      String
+  assignee    User?   @relation(fields: [userID], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  userID      Int?
 }

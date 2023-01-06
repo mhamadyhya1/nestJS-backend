@@ -15,5 +15,5 @@ export declare class AuthService {
     findAll(): string;
     findOne(id: number): string;
     update(id: number, updateAuthDto: UpdateAuthDto): string;
-    remove(id: number): string;
+    remove(id: number): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
 }

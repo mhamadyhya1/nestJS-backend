@@ -22,18 +22,25 @@ let TaskService = class TaskService {
     findAllTask() {
         return this.prisma.task.findMany();
     }
-    async findAll(pages, limit) {
+    async findAllPaginated(pages, limit) {
         const take = limit;
         console.log(take);
         const page = pages || 1;
         const skip = (page - 1) * take;
         const total = await this.prisma.task.count();
         const count = Math.ceil(total / limit);
-        const filtered = await this.prisma.task.findMany({ take: take, skip: skip });
+        const filtered = await this.prisma.task.findMany({ include: { assignee: true }, take: take, skip: skip });
         return { count, data: filtered };
+    }
+    async find() {
+        const tasks = await this.prisma.user.findMany();
+        return tasks;
     }
     findOne(id) {
         return this.prisma.task.findUnique({ where: { id } });
+    }
+    async asignATask(id, updateTaskDto) {
+        const task = await this.prisma.task.update({ where: { id }, data: updateTaskDto });
     }
     update(id, updateTaskDto) {
         return this.prisma.task.update({
@@ -44,16 +51,19 @@ let TaskService = class TaskService {
     assignTaskByUser(id, updateTaskDto) {
         return this.prisma.task.update({
             where: { id },
-            data: { assignee: updateTaskDto.assignee },
+            data: { userID: updateTaskDto.userID },
         });
     }
     remove(id) {
         return this.prisma.task.delete({ where: { id } });
     }
+    removeAll() {
+        return this.prisma.task.deleteMany();
+    }
     filteringTask(updateTaskDto) {
         const data = this.prisma.task.findMany({
             where: { OR: [
-                    { assignee: updateTaskDto.assignee },
+                    { userID: updateTaskDto.userID },
                     { status: updateTaskDto.status }
                 ] }
         });

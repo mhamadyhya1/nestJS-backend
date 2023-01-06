@@ -14,6 +14,7 @@ const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
 const prisma_service_1 = require("../prisma/prisma.service");
 const argon = require("argon2");
+const exceptions_1 = require("@nestjs/common/exceptions");
 let AuthService = class AuthService {
     constructor(prisma, jwtService) {
         this.prisma = prisma;
@@ -33,11 +34,11 @@ let AuthService = class AuthService {
     async login(createAuthDto) {
         const checkUser = await this.prisma.user.findUnique({ where: { email: createAuthDto.email } });
         if (!checkUser) {
-            throw new common_1.ForbiddenException('Email does not exists, Create New Account');
+            throw new exceptions_1.BadRequestException('Email does not exists, Create New Account');
         }
         const isMatch = await argon.verify(checkUser.password, createAuthDto.password);
         if (isMatch == false) {
-            throw new common_1.ForbiddenException('Password incorrect');
+            throw new exceptions_1.BadRequestException('Password incorrect');
         }
         const payload = { id: checkUser.id };
         return {
@@ -55,7 +56,7 @@ let AuthService = class AuthService {
         return `This action updates a #${id} auth`;
     }
     remove(id) {
-        return `This action removes a #${id} auth`;
+        return this.prisma.user.delete({ where: { id: id } });
     }
 };
 AuthService = __decorate([

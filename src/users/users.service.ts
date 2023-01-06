@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as argon from 'argon2';
@@ -22,11 +22,15 @@ export class UsersService {
     return created
   }
   findAll() {
-    return `This action returns all users`;
+    return this.prisma.user.findMany();
   }
 
-  findOne(id: number) {
-    return this.prisma.user.findUnique({where:{id}})
+ async findOne(id: number) {
+    const user = await this.prisma.user.findUnique({where:{id:id}})
+    if(!user){
+      throw new NotFoundException('Not Available User')
+    }
+    return user
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
