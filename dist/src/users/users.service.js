@@ -26,12 +26,12 @@ let UsersService = class UsersService {
             throw new common_1.BadRequestException('message');
         }
         else {
-            created = await this.prisma.user.create({ data: { email: createUserDto.email, password: hashedPass, isAdmin: createUserDto.isAdmin } });
+            created = await this.prisma.user.create({ data: { email: createUserDto.email, name: createUserDto.name, password: hashedPass, isAdmin: createUserDto.isAdmin } });
         }
         return created;
     }
     findAll() {
-        return this.prisma.user.findMany();
+        return this.prisma.user.findMany({ select: { name: true, id: true } });
     }
     async findOne(id) {
         const user = await this.prisma.user.findUnique({ where: { id: id } });
@@ -45,6 +45,9 @@ let UsersService = class UsersService {
             where: { id },
             data: updateUserDto,
         });
+    }
+    removeAll() {
+        return this.prisma.user.deleteMany();
     }
     remove(id) {
         return this.prisma.user.delete({ where: { id } });

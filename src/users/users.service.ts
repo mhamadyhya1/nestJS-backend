@@ -17,12 +17,12 @@ export class UsersService {
       throw new BadRequestException('message')
     }
     else{
-      created = await this.prisma.user.create({data:{email:createUserDto.email,password:hashedPass,isAdmin:createUserDto.isAdmin}})
+      created = await this.prisma.user.create({data:{email:createUserDto.email,name:createUserDto.name,password:hashedPass,isAdmin:createUserDto.isAdmin}})
     }
     return created
   }
   findAll() {
-    return this.prisma.user.findMany();
+    return this.prisma.user.findMany({select:{name:true,id:true}});
   }
 
  async findOne(id: number) {
@@ -39,7 +39,9 @@ export class UsersService {
       data:updateUserDto,
     })
   }
-
+  removeAll() {
+    return this.prisma.user.deleteMany();
+  }
   remove(id: number) {
     return this.prisma.user.delete({where:{id}});
   }

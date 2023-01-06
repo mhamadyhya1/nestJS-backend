@@ -36,6 +36,9 @@ let UsersController = class UsersController {
     update(id, updateUserDto) {
         return this.usersService.update(+id, updateUserDto);
     }
+    removeAll() {
+        return this.usersService.removeAll();
+    }
     remove(id) {
         return this.usersService.remove(+id);
     }
@@ -68,6 +71,12 @@ __decorate([
     __metadata("design:paramtypes", [String, update_user_dto_1.UpdateUserDto]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "update", null);
+__decorate([
+    (0, common_1.Delete)('/all'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "removeAll", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),

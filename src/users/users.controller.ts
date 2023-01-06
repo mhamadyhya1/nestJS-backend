@@ -30,6 +30,10 @@ export class UsersController {
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(+id, updateUserDto);
   }
+  @Delete('/all')
+  removeAll() {
+    return this.usersService.removeAll();
+  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
