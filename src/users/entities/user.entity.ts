@@ -3,6 +3,7 @@ import { User } from "@prisma/client";
 export interface UserEntity extends User {
     id: number;
     email: string;
+    name:string;
     password: string;
     isAdmin:number;
 }

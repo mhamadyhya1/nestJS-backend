@@ -19,7 +19,7 @@ export class AuthService {
     // if(checkEmail!=undefined){
     //   throw new ForbiddenException('message')
     // }
-    created = await this.prisma.user.create({data:{email:createAuthDto.email,password:hashedPass,isAdmin:createAuthDto.isAdmin}})
+    created = await this.prisma.user.create({data:{email:createAuthDto.email,name:createAuthDto.name,password:hashedPass,isAdmin:createAuthDto.isAdmin}})
     return created
   }
   async login(createAuthDto: CreateAuthDto){

@@ -28,7 +28,7 @@ let AuthService = class AuthService {
         const hashedPass = await argon.hash(createAuthDto.password);
         const checkEmail = this.prisma.user.findFirst({ where: { email: createAuthDto.email } });
         console.log("user", checkEmail);
-        created = await this.prisma.user.create({ data: { email: createAuthDto.email, password: hashedPass, isAdmin: createAuthDto.isAdmin } });
+        created = await this.prisma.user.create({ data: { email: createAuthDto.email, name: createAuthDto.name, password: hashedPass, isAdmin: createAuthDto.isAdmin } });
         return created;
     }
     async login(createAuthDto) {

@@ -55,7 +55,7 @@ let TaskService = class TaskService {
         });
     }
     remove(id) {
-        return this.prisma.task.delete({ where: { id } });
+        return this.prisma.task.delete({ where: { id: id } });
     }
     removeAll() {
         return this.prisma.task.deleteMany();
